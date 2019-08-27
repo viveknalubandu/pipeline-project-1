@@ -6,7 +6,7 @@ pipeline {
    stages {
        stage("build") {
            steps {
-              snDevOpsStep '77cf85c10f6333009d1a986eb4767eae'
+              snDevOpsStep '456e9d150f6333009d1a986eb4767e83'
                echo "Building" 
                 sh 'mvn clean install -DskipTests'
                sleep 5
@@ -14,7 +14,7 @@ pipeline {
        }
        stage("test") {
            steps {
-               snDevOpsStep '7bcf85c10f6333009d1a986eb4767eae'
+               snDevOpsStep '496e9d150f6333009d1a986eb4767e83'
                echo "Testing"
                sh 'mvn test -Dpublish'
                sleep 3
@@ -22,7 +22,7 @@ pipeline {
        }
        stage("deploy") {
            steps {
-               snDevOpsStep 'f7cf85c10f6333009d1a986eb4767eae'
+               snDevOpsStep 'c56e9d150f6333009d1a986eb4767e83'
                snDevOpsChange()
                echo "Deploying"
                // release process
