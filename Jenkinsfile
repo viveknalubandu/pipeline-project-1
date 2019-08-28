@@ -27,6 +27,10 @@ pipeline {
                sh 'mvn test -Dpublish'
                sleep 3
            }
+          post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+          }
        }
        stage("deploy") {
            steps {
