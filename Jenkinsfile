@@ -12,6 +12,14 @@ pipeline {
                sleep 5
            }
        }
+      stage("UAT") {
+           steps {
+              snDevOpsStep 'cbc16ea50fe333009d1a986eb4767e0d'
+               echo "UAT" 
+                sh 'mvn --version'
+               sleep 1
+           }
+       }
        stage("test") {
            steps {
                snDevOpsStep '496e9d150f6333009d1a986eb4767e83'
@@ -25,7 +33,6 @@ pipeline {
                snDevOpsStep 'c56e9d150f6333009d1a986eb4767e83'
                snDevOpsChange()
                echo "Deploying"
-               // release process
                // release process
                sleep 7
            }
