@@ -12,6 +12,7 @@ pipeline {
                sleep 5
            }
        }
+       
        stage("test") {
            steps {
                snDevOpsStep '496e9d150f6333009d1a986eb4767e83'
@@ -22,8 +23,10 @@ pipeline {
           post {
                 always {
                     junit '**/target/surefire-reports/*.xml' 
+                }
           }
-       }
+        }
+
        stage("deploy") {
            steps {
                snDevOpsStep 'c56e9d150f6333009d1a986eb4767e83'
