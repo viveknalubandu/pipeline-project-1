@@ -6,7 +6,7 @@ pipeline {
    stages {
        stage("build") {
            steps {
-              snDevOpsStep 'de251af7db2bb340bffe5223dc9619c2'
+              snDevOpsStep (stepSysId:'de251af7db2bb340bffe5223dc9619c2', ignoreFailure: true)
                echo "Building" 
                 sh 'mvn clean install -DskipTests'
                sleep 5
@@ -15,7 +15,7 @@ pipeline {
        
        stage("test") {
            steps {
-               snDevOpsStep '52251af7db2bb340bffe5223dc9619c3'
+               snDevOpsStep (stepSysId:'52251af7db2bb340bffe5223dc9619c3', ignoreFailure: true)
                echo "Testing"
                sh 'mvn test -Dpublish'
                sleep 3
@@ -29,8 +29,8 @@ pipeline {
 
        stage("deploy") {
            steps {
-               snDevOpsStep 'd2251af7db2bb340bffe5223dc9619c3'
-               snDevOpsChange()
+               snDevOpsStep (stepSysId:'d2251af7db2bb340bffe5223dc9619c3', ignoreFailure: true)
+               snDevOpsChange(ignoreFailure:true, disabled:false)
                echo "Deploying"
                // release process
                // release process
