@@ -34,7 +34,6 @@ pipeline {
                // release process
                // release process
                sleep 7
-           }
-       }
-   }
-}
+        }
+      }
+  }
