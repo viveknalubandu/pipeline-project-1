@@ -28,12 +28,14 @@ pipeline {
         }
 
        stage("deploy") {
+           steps {
                snDevOpsStep 'ecb27316db3bb7004bbc594e5e961966'
                snDevOpsChange()
                echo "Deploying"
                // release process
                // release process
                sleep 7
-        }
-      }
-  }
+           }
+       }
+   }
+}
