@@ -7,9 +7,9 @@ pipeline {
        stage("build") {
            steps {
               snDevOpsStep '95ac543fdbb7bf40963c5c55dc9619fe'
-               echo "Building" 
-                sh 'mvn clean install -DskipTests'
-               sleep 5
+              // echo "Building" 
+               // sh 'mvn clean install -DskipTests'
+              // sleep 5
               snDevOpsChange()
            }
        }
