@@ -10,7 +10,7 @@ pipeline {
                echo "Building" 
                 sh 'mvn clean install -DskipTests'
                sleep 5
-              snDevOpsChange()
+              
            }
        }
        
@@ -32,6 +32,7 @@ pipeline {
            steps {
                snDevOpsStep '1dac543fdbb7bf40963c5c55dc9619fd'       
                echo "Deploying"
+               snDevOpsChange()
                // release process
                // release process
                sleep 7
