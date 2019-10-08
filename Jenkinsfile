@@ -17,7 +17,7 @@ pipeline {
                 snDevOpsChange()
                 sh 'mvn clean install -DskipTests=true'
             }
-        }
+        }echo
         stage('Unit Test') {
             steps {
                 snDevOpsStep()
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 snDevOpsStep()
                 snDevOpsChange()
-                sh "mvn test -Dtest=AddTest"
+                "Integration Test"
             }
         }
         stage('Deploy to Dev') {
@@ -43,7 +43,7 @@ pipeline {
                 // sh "mvn -B release:prepare"
                 // sh "mvn -B release:perform"
                 // deploy using kubernetes - kubectl
-                echo "Deploy to dev"
+                 "Deploy to dev"
             }
         }
         stage('Deploy to Prod') {
