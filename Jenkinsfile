@@ -17,7 +17,7 @@ pipeline {
                 snDevOpsChange()
                 sh 'mvn clean install -DskipTests=true'
             }
-        }echo
+        }
         stage('Unit Test') {
             steps {
                 snDevOpsStep()
