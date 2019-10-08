@@ -29,7 +29,7 @@ pipeline {
             steps {
                 snDevOpsStep()
                 snDevOpsChange()
-                "Integration Test"
+                echo "Integration Test"
             }
         }
         stage('Deploy to Dev') {
@@ -43,7 +43,7 @@ pipeline {
                 // sh "mvn -B release:prepare"
                 // sh "mvn -B release:perform"
                 // deploy using kubernetes - kubectl
-                 "Deploy to dev"
+                 echo "Deploy to dev"
             }
         }
         stage('Deploy to Prod') {
