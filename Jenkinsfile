@@ -1,42 +1,64 @@
 pipeline {
-   agent any
-   tools {
-      maven 'Maven'
-   }
-   stages {
-       stage("build") {
-           steps {
-              snDevOpsStep ()
-              // echo "Building" 
-               sh 'mvn clean install -DskipTests'
-              // sleep 5
-              
-           }
-       }
-       
-       stage("test") {
-           steps {
-               snDevOpsStep ()
-               echo "Testing"
-               sh 'mvn test -Dpublish'
-               sleep 3
-           }
-          post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' 
-                }
-          }
+    agent any
+    tools { 
+        maven 'Maven' 
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                checkout scm
+            }
         }
-
-       stage("deploy") {
-           steps {
-               snDevOpsStep ()       
-               echo "Deploying"
-              snDevOpsChange()
-               // release process
-               // release process
-               sleep 7
-           }
-       }
-   }
+        stage('Build') {
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                sh 'mvn clean install -DskipTests=true'
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                sh "mvn test -Dtest=AppTest"
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                sh "mvn test -Dtest=AddTest"
+            }
+        }
+        stage('Deploy to Dev') {
+            when {
+                branch 'dev' 
+            }
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                // sh "mvn -B deploy"
+                // sh "mvn -B release:prepare"
+                // sh "mvn -B release:perform"
+                // deploy using kubernetes - kubectl
+                echo "Deploy to dev"
+            }
+        }
+        stage('Deploy to Prod') {
+            when {
+                branch 'master'  
+            }
+            steps {
+                snDevOpsStep()
+                snDevOpsChange()
+                // sh "mvn -B deploy"
+                // sh "mvn -B release:prepare"
+                // sh "mvn -B release:perform"
+                // deploy using kubernetes - kubectl
+                echo "Deploy to prod"
+            }
+        }
+    }
 }
