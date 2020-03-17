@@ -69,8 +69,8 @@ snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"
                     steps{
                         snDevOpsStep ()
                         echo "deploy in prod"
-                
-						snDevOpsChange()
+snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}]}""")
+			snDevOpsChange()
                     }
                 }
             }
