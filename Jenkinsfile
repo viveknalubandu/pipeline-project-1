@@ -30,8 +30,8 @@ pipeline {
  				echo "Stage name is ${env.STAGE_NAME}"
  				echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-				snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}],"stageName": "build"}""")
-                
+/**		snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}],"stageName": "build"}""")
+   **/             
             }
         }
 
