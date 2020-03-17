@@ -41,7 +41,6 @@ pipeline {
                 echo "Unit Test"
                 sh "mvn test"
                 sleep 5
-snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}]}""")
             }
             post {
                 always {
@@ -58,6 +57,8 @@ snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"
                     }
                     steps{
                         snDevOpsStep ()
+snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}]}""")
+
                         echo "deploy in UAT"
                         snDevOpsChange()
                     }
@@ -69,7 +70,6 @@ snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"
                     steps{
                         snDevOpsStep ()
                         echo "deploy in prod"
-snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "pipeline-demo-webapp.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "pipeline-demo"}]}""")
 			snDevOpsChange()
                     }
                 }
