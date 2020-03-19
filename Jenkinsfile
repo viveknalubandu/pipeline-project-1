@@ -30,7 +30,6 @@ pipeline {
  				echo "Stage name is ${env.STAGE_NAME}"
  				echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-		snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "build"}""")            
             }
         }
 
@@ -39,6 +38,7 @@ pipeline {
                 snDevOpsStep()
                 echo "Unit Test"
                 sh "mvn test"
+		snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "build"}""")            
                 sleep 5
             }
             post {
@@ -67,7 +67,7 @@ pipeline {
                     steps{
                         snDevOpsStep ()
                         echo "deploy in prod"
-	snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}]}""")
+		snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}]}""")
 		snDevOpsChange()
                     }
                 }
