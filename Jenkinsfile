@@ -68,6 +68,7 @@ pipeline {
                     steps{
                         snDevOpsStep ()
                         echo "deploy in prod"
+			snDevOpsChange()
 /**		snDevOpsPackage(name: "devops_pipeline_demo_${version}", artifactsPayload: """{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}]}""")
 		**/
                     }
