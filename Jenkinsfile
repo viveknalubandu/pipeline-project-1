@@ -9,7 +9,7 @@ def version = "${env.BUILD_NUMBER}.0"
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        maven 'Jenkins Maven'
     }
     stages {
         stage("checkout") {
