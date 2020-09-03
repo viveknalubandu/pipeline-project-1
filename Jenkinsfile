@@ -64,7 +64,7 @@ pipeline {
                         branch 'master'
                     }
                     steps{
-                        snDevOpsStep ()
+               
                         echo "deploy in prod"
 			snDevOpsChange()
                     }
