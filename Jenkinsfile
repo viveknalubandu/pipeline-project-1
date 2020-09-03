@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage("checkout") {
             steps {
-                snDevOpsStep()
+               
                 echo "Building" 
                 checkout scm
             }
@@ -22,7 +22,7 @@ pipeline {
 
         stage("build") {
             steps {
-                snDevOpsStep()
+            
                 sh 'mvn clean install -DskipTests'
                 echo 'Building..'
                 echo "Pipeline name is ${env.JOB_NAME}"
@@ -36,7 +36,6 @@ pipeline {
 
         stage('unit-tests') {
             steps {
-                snDevOpsStep()
                 echo "Unit Test"
                 sh "mvn test"
                 sleep 5
@@ -56,11 +55,9 @@ pipeline {
                         branch 'dev'
                     }
                     steps{
-                        snDevOpsStep ()
                         echo "deploy in UAT"
             	snDevOpsPackage(name: "devops_pipeline_demo_dev${version}", artifactsPayload: """{"artifacts": [{"name": "devops_pipeline_demo_dev.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo_dev"}]}""")
-	        snDevOpsChange()
-                    }
+                  }
                 }
                 stage('deploy to prod') {
                     when {
