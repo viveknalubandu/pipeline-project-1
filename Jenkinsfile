@@ -48,6 +48,20 @@ pipeline {
           }
         }
 
+	stage('UAT') {
+            steps {
+		snDevOpsStep()
+                echo "UAT Test"
+                sh "mvn test"
+                sleep 5
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
+        }
+	    
         stage("deploy") {
             stages{
                 stage('deploy to dev') {
