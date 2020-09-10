@@ -57,6 +57,7 @@ pipeline {
                     steps{
 			snDevOpsStep()
                         echo "deploy in UAT"
+			snDevOpsChange()
                   }
                 }
                 stage('deploy to prod') {
