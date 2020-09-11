@@ -66,20 +66,20 @@ pipeline {
             stages{
                 stage('deploy to dev') {
                     when{
-			snDevOpsStep()
                         branch 'dev'
                     }
                     steps{
+			snDevOpsStep()
                         echo "deploy in UAT"
 			snDevOpsChange()
                   }
                 }
                 stage('deploy to prod') {
                     when {
-			snDevOpsStep()
                         branch 'master'
                     }
                     steps{
+			snDevOpsStep()
                         echo "deploy in prod"
 			snDevOpsChange()
                     }
