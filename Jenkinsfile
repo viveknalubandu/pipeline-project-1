@@ -22,7 +22,6 @@ pipeline {
 
         stage("build") {
             steps {
-            	snDevOpsStep()
                 sh 'mvn clean install -DskipTests'
                 echo 'Building..'
                 echo "Pipeline name is ${env.JOB_NAME}"
@@ -36,7 +35,6 @@ pipeline {
 
         stage('unit-tests') {
             steps {
-		snDevOpsStep()
                 echo "Unit Test"
                 sh "mvn test"
                 sleep 5
@@ -50,7 +48,6 @@ pipeline {
 
 	stage('UAT') {
             steps {
-		snDevOpsStep()
                 echo "UAT Test"
                 sh "mvn test"
                 sleep 5
@@ -69,7 +66,6 @@ pipeline {
                         branch 'dev'
                     }
                     steps{
-			snDevOpsStep()
                         echo "deploy in UAT"
 			snDevOpsChange()
                   }
@@ -79,7 +75,6 @@ pipeline {
                         branch 'master'
                     }
                     steps{
-                        snDevOpsStep()
                         echo "deploy in prod"
 			snDevOpsChange()
                     }
