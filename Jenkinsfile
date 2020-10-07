@@ -13,11 +13,25 @@ pipeline {
     }
     stages {
         stage("checkout") {
-            steps {
-                echo "Building" 
-                checkout scm
-            }
-        }
+            stages{
+                stage('deploy to dev') {
+                    when{
+                        branch 'dev'
+                    }
+                    steps{
+                        echo "Building in UAT"
+                    }
+                }
+                stage('deploy to prod') {
+                    when {
+                        branch 'master'
+                    }
+                    steps{
+                        echo "Building in prod"
+                    }
+                }
+	    }
+	}
 
         stage("build") {
             steps {
@@ -64,7 +78,7 @@ pipeline {
                     }
                     steps{
                         echo "deploy in prod"
-			                 snDevOpsChange()
+			snDevOpsChange()
 
                     }
                 }
