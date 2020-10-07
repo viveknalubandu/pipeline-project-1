@@ -13,16 +13,28 @@ pipeline {
     }
     stages {
         stage("checkout") {
-            steps {
-                snDevOpsStep()
-                echo "Building" 
-                checkout scm
-            }
-        }
+            stages{
+                stage('deploy to dev') {
+                    when{
+                        branch 'dev'
+                    }
+                    steps{
+                        echo "Building in UAT"
+                    }
+                }
+                stage('deploy to prod') {
+                    when {
+                        branch 'master'
+                    }
+                    steps{
+                        echo "Building in prod"
+                    }
+                }
+	    }
+	}
 
         stage("build") {
             steps {
-		snDevOpsStep()
                 sh 'mvn clean install -DskipTests'
                 echo 'Building..'
                 echo "Pipeline name is ${env.JOB_NAME}"
@@ -30,16 +42,18 @@ pipeline {
  				echo "Stage name is ${env.STAGE_NAME}"
  				echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
-		    
-	    }
+            }
+
         }
 
         stage('unit-tests') {
             steps {
-		snDevOpsStep()
                 echo "Unit Test"
                 sh "mvn test"
+	snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
+	snDevOpsChange()
                 sleep 5
+		snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo_dev.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo_dev"}],"stageName": "unit-tests"}""")            
             }
             post {
                 always {
@@ -48,20 +62,6 @@ pipeline {
           }
         }
 
-	stage('UAT') {
-            steps {
-		snDevOpsStep()
-                echo "UAT Test"
-                sh "mvn test"
-                sleep 5
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' 
-                }
-          }
-        }
-	    
         stage("deploy") {
             stages{
                 stage('deploy to dev') {
@@ -69,19 +69,17 @@ pipeline {
                         branch 'dev'
                     }
                     steps{
-			snDevOpsStep()
                         echo "deploy in UAT"
-			snDevOpsChange()
-                  }
+                    }
                 }
                 stage('deploy to prod') {
                     when {
                         branch 'master'
                     }
                     steps{
-			snDevOpsStep()
                         echo "deploy in prod"
 			snDevOpsChange()
+
                     }
                 }
             }
