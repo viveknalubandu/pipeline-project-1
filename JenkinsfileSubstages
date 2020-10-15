@@ -13,91 +13,89 @@ pipeline {
 	}
 	stages {
 		stage("checkout") {
-			stages {
-				stage('deploy to dev') {
-					when {
-						branch 'dev'
-					}
-					steps {
-						echo "Building in UAT"
-					}
+		stages {
+			stage('deploy to dev') {
+				when {
+					branch 'dev'
 				}
-				stage('deploy to prod') {
-					when {
-						branch 'master'
-					}
-					steps {
-						echo "Building in prod"
-					}
+				steps {
+					echo "Building in UAT"
+				}
+			}
+			stage('deploy to prod') {
+				when {
+					branch 'master'
+				}
+				steps {
+					echo "Building in prod"
 				}
 			}
 		}
-
-		stage("build") {
-			stages {
-				stage('deploy to dev') {
-					when {
-						branch 'dev'
-					}
-					steps {
-						echo "Manual Building in UAT"
-					}
-				}
-				stage('deploy to prod') {
-					when {
-						branch 'master'
-					}
-					steps {
-						echo "Manual Building in prod"
-					}
-				}
-			}
-
-		}
-
-		stage('unit-tests') {
-			stages {
-				stage('deploy to dev') {
-					when {
-						branch 'dev'
-					}
-					steps {
-						echo "Manual Test in UAT"
-					}
-				}
-				stage('deploy to prod') {
-					when {
-						branch 'master'
-					}
-					steps {
-						echo "Manual Test in prod"
-					}
-				}
-			}
-		}
-
-		stage("deploy") {
-			stages {
-				stage('deploy to dev') {
-					when {
-						branch 'dev'
-					}
-					steps {
-						echo "deploy in UAT"
-					}
-				}
-				stage('deploy to prod') {
-					when {
-						branch 'master'
-					}
-					steps {
-						echo "deploy in prod"
-						snDevOpsChange()
-
-					}
-				}
-			}
-		}
-
 	}
+
+	stage("build") {
+		stages {
+			stage('deploy to dev') {
+				when {
+					branch 'dev'
+				}
+				steps {
+					echo "Manual Building in UAT"
+				}
+			}
+			stage('deploy to prod') {
+				when {
+					branch 'master'
+				}
+				steps {
+					echo "Manual Building in prod"
+				}
+			}
+		}
+     }
+
+	stage('unit-tests') {
+		stages {
+			stage('deploy to dev') {
+				when {
+					branch 'dev'
+				}
+				steps {
+					echo "Manual Test in UAT"
+				}
+			}
+			stage('deploy to prod') {
+				when {
+					branch 'master'
+				}
+				steps {
+					echo "Manual Test in prod"
+				}
+			}
+		}
+	}
+
+	stage("deploy") {
+		stages {
+			stage('deploy to dev') {
+				when {
+					branch 'dev'
+				}
+				steps {
+					echo "deploy in UAT"
+				}
+			}
+			stage('deploy to prod') {
+				when {
+					branch 'master'
+				}
+				steps {
+					echo "deploy in prod"
+					snDevOpsChange()
+				}
+			}
+		}
+	}
+
+}
 }
