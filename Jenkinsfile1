@@ -30,7 +30,7 @@ pipeline {
  				echo "GIT branch is ${env.GIT_BRANCH}"
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
         }
-
+       }
         stage('unit-tests') {
             steps {
                 
