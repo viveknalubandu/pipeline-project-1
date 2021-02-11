@@ -50,7 +50,7 @@ pipeline {
             stages{
                 stage('deploy to dev') {
                     when{
-                        branch 'dev'
+                        branch 'scratch/dev!@@&master'
                     }
                     steps{
                         
