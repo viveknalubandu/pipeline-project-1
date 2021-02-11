@@ -23,7 +23,7 @@ pipeline {
             steps {
                 
                 sh 'mvn clean install -DskipTests'
-                echo 'Building..'
+                echo 'Building..Pipeline'
                 echo "Pipeline name is ${env.JOB_NAME}"
  				echo "Pipleine run rumber is ${env.BUILD_NUMBER}"
  				echo "Stage name is ${env.STAGE_NAME}"
