@@ -4,6 +4,7 @@ import org.junit.Test;
 
 public class AppTest {
 // rrt   13411
+    // test SPart1
     // Test
     private String INPUT = "13412";
     @Test 
