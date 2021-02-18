@@ -38,36 +38,7 @@ pipeline {
                 echo "Unit Test"
                 sh "mvn test"
                 sleep 5
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' 
-                }
-          }
-        }
-
-        stage("deploy") {
-            stages{
-                stage('deploy to dev') {
-                    when{
-                        branch 'dev'
-                    }
-                    steps{
-                        
-                        echo "deploy in UAT"
-                        snDevOpsChange()
-
-                    }
-                }
-                stage('deploy to prod') {
-                    when {
-                        branch 'master'
-                    }
-                    steps{
-			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-
-                        echo "deploy in prod"
-			snDevOpsChange(changeRequestDetails: """
+		snDevOpsChange(changeRequestDetails: """
                   {
 	"setCloseCode": false,
 	"attributes": {
@@ -97,7 +68,37 @@ pipeline {
 	}
 }
                   """)
+
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
+        }
+
+        stage("deploy") {
+            stages{
+                stage('deploy to dev') {
+                    when{
+                        branch 'dev'
                     }
+                    steps{
+                        
+                        echo "deploy in UAT"
+                        snDevOpsChange()
+
+                    }
+                }
+                stage('deploy to prod') {
+                    when {
+                        branch 'master'
+                    }
+                    steps{
+			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
+
+                        echo "deploy in prod"
+                   }
                 }
             }
         }
