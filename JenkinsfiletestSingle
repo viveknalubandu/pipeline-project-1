@@ -11,31 +11,23 @@ pipeline {
         maven 'Maven'
     }
     stages {
-        stage("deploy") {
-            stages{
-                stage('deploy to dev') {
-                    when{
-                        branch 'dev'
-                    }
-                    steps{
-                        
-                        echo "deploy in UAT"
-                        snDevOpsChange()
+        stage('unit-tests') {
+            steps {
+               snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
 
-                    }
-                }
-                stage('deploy to prod') {
-                    when {
-                        branch 'master'
-                    }
-                    steps{
-			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-			snDevOpsChange()
-                        echo "deploy in prod"
-                   }
-                }
+                echo "Unit Test"
+                sh "mvn test"
+                sleep 5
+		snDevOpsChange()
+
             }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' 
+                }
+          }
         }
+      }
 	
     }
 
