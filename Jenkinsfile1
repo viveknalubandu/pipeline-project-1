@@ -31,22 +31,7 @@ pipeline {
                 echo "globalprops -- ${env.snartifacttoolId} -- ${env.snhost} -- ${env.snuser} -- ${env.snpassword} ";
         }
        }
-        stage('unit-tests') {
-            steps {
-               snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
-
-                echo "Unit Test"
-                sh "mvn test"
-                sleep 5
-		snDevOpsChange()
-
-            }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml' 
-                }
-          }
-        }
+        
 
         stage("deploy") {
             stages{
