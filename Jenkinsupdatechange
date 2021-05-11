@@ -68,7 +68,22 @@ pipeline {
                     }
                     steps{
 			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-			snDevOpsChange()
+			snDevOpsChange(changeRequestDetails: """ {
+	"setCloseCode": true,
+	"attributes": {
+		"description": "DevOps test ",
+		"priority": "5",
+		"requested_by": {
+			"email": "abel.tuter@example.com"
+		},
+		"justification": "Connect your planning ",
+		"implementation_plan": "Test implementation plan",
+		"test_plan": "Test plan to test the tests which test the test-now application",
+		"cmdb_ci": "0c43bc5fc61122750182c13269a7a3ef",
+		"business_service":"26da329f0a0a0bb400f69d8159bc753d",
+		"type":"normal"
+	}
+} """)
                         echo "deploy in prod"
                    }
                 }
