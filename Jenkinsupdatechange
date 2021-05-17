@@ -67,20 +67,8 @@ pipeline {
                         branch 'scratch/dev!@@&master'
                     }
                     steps{
-			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-			snDevOpsChange(changeRequestDetails: """ {
-	"setCloseCode": true,
-	"attributes": {
-		"description": "DevOps test ",
-		"priority": "5",
-		"justification": "Connect your planning ",
-		"implementation_plan": "Test implementation plan",
-		"test_plan": "Test plan to test the tests which test the test-now application",
-		"cmdb_ci": "6a78f28f933a31003b4bb095e57ffb8e",
-		"business_service":"044aad03933a31003b4bb095e57ffbf5",
-		"type":"emergency"
-	}
-} """)
+			//snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
+			snDevOpsChange()
                         echo "deploy in prod"
                    }
                 }
