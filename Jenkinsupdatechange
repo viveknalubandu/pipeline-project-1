@@ -73,9 +73,6 @@ pipeline {
 	"attributes": {
 		"description": "DevOps test ",
 		"priority": "5",
-		"requested_by": {
-			"email": "abel.tuter@example.com"
-		},
 		"justification": "Connect your planning ",
 		"implementation_plan": "Test implementation plan",
 		"test_plan": "Test plan to test the tests which test the test-now application",
