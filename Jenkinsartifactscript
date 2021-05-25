@@ -64,7 +64,6 @@ pipeline {
                 echo "Unit Test"
                 sh "mvn test"
                 sleep 5
-		            snDevOpsChange()
 
             }
             post {
@@ -77,8 +76,9 @@ pipeline {
         stage("deploy") {
              
                     steps{
-			              snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-                        echo "deploy in prod"
+			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
+                        snDevOpsChange()
+			echo "deploy in prod"
                    }
                 
         }
