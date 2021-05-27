@@ -47,19 +47,34 @@ pipeline {
                     }
                     steps{
 			snDevOpsChange(changeRequestDetails: """ {
-	"setCloseCode": true,
-	"attributes": {
-		"description": "DevOps test ",
-		"priority": "5",
-		"justification": "Connect your planning ",
-		"implementation_plan": "Test implementation plan",
-		"test_plan": "Test plan to test the tests which test the test-now application",
-                "type":"normal",
-                "cmdb_ci":"0c43bc4fc61122750182c132411702f2",                              
-                "business_service":"26da329f0a0a0bb400f69d8159bc753d"
-
-	}
-} """)
+		"setCloseCode": true,
+		"attributes": {
+			"description": " DevOps XT test Description",  // Please verify the data exist in servicenow
+			"priority": "5",
+			"short_description": "DevOps XT test Short Description",
+			"requested_by": {
+				"email": "abel.tuter@example.com"
+			},
+			"start_date": "2021-02-05 08:00:00",
+			"end_date": "2021-02-15 08:00:00",
+			"cab_required": true,
+			"cab_delegate": {
+				"name": "Andrew Och"
+			},
+			"justification": "DevOps XT test justification",
+			"implementation_plan": "DevOps XT Test implementation plan",
+			"backout_plan": "DevOps XT Test backout plan",
+			"test_plan": "DevOps XT Test plan to test the tests which test the test-now application",
+			"watch_list": [
+				"a8f98bb0eb32010045e1a5115206fe3a",
+				"62826bf03710200044e0bfc8bcbe5df1"
+			],
+			"work_notes_list": [
+				"a8f98bb0eb32010045e1a5115206fe3a",
+				"62826bf03710200044e0bfc8bcbe5df1"
+			]
+		}
+	} """)
                         echo "deploy in prod"
                    }
                 }
