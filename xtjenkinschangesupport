@@ -1,0 +1,71 @@
+def artifactname = "sp-boot-app.jar"
+def repoName = "sp-boot-app-repo"
+def pipelineName = "devops_vk_pipeline"
+def semanticVersion = "${env.BUILD_NUMBER}.0.0"
+def packageName = "spboot-package_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    stages {
+        stage("checkout") {
+            steps {
+                
+                echo "Building Pipeline" 
+                checkout scm
+            }
+        }
+        
+	stage('unit-tests') {
+            steps {
+
+                echo "Unit Test"
+                sleep 5
+            }
+            
+        }
+	
+        stage("deploy") {
+            stages{
+                stage('deploy to dev') {
+                    when{
+                        branch 'dev'
+                    }
+                    steps{
+                        
+                        echo "deploy in UAT"
+                        snDevOpsChange()
+
+                    }
+                }
+                stage('deploy to prod') {
+                    when {
+                        branch 'master'
+                    }
+                    steps{
+			snDevOpsChange(changeRequestDetails: """ {
+	"setCloseCode": true,
+	"attributes": {
+		"description": "DevOps test ",
+		"priority": "5",
+		"justification": "Connect your planning ",
+		"implementation_plan": "Test implementation plan",
+		"test_plan": "Test plan to test the tests which test the test-now application",
+                "type":"normal",
+                "cmdb_ci":"0c43bc4fc61122750182c132411702f2",                              
+                "business_service":"26da329f0a0a0bb400f69d8159bc753d"
+
+	}
+} """)
+                        echo "deploy in prod"
+                   }
+                }
+            }
+        }
+	
+    }
+
+}
