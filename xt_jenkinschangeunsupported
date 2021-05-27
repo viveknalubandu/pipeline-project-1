@@ -1,0 +1,79 @@
+def artifactname = "sp-boot-app.jar"
+def repoName = "sp-boot-app-repo"
+def pipelineName = "devops_vk_pipeline"
+def semanticVersion = "${env.BUILD_NUMBER}.0.0"
+def packageName = "spboot-package_${env.BUILD_NUMBER}"
+def version = "${env.BUILD_NUMBER}.0"
+
+pipeline {
+    agent any
+    tools {
+        maven 'Maven'
+    }
+    stages {
+        stage("checkout") {
+            steps {
+                
+                echo "Building Pipeline" 
+                checkout scm
+            }
+        }
+        
+	stage('unit-tests') {
+            steps {
+
+                echo "Unit Test"
+                sleep 5
+            }
+            
+        }
+	
+        stage("deploy") {
+            stages{
+                stage('deploy to dev') {
+                    when{
+                        branch 'dev'
+                    }
+                    steps{
+                        
+                        echo "deploy in UAT"
+                        snDevOpsChange()
+
+                    }
+                }
+                stage('deploy to prod') {
+                    when {
+                        branch 'master'
+                    }
+                    steps{
+			snDevOpsChange(changeRequestDetails: """ {
+		"attributes": {
+			"business_service": {
+				"sys_id": "26da329f0a0a0bb400f69d8159bc753d"
+			},
+			"cmdb_ci": {
+				"sys_id": "46bbf419a9fe1981009802288c1eb79d"
+			},
+			"assignment_group": {
+				"sys_id": "a715cd759f2002002920bde8132e7018"
+			},
+			"requested_by": {
+				"email": "ghostTester@test.com"
+			},
+			"impact": "3",
+			"risk": "4",
+			"type": "standard",
+			"unknown": "",
+			"state": "-1",
+			"risk_impact_analysis": "test"
+		}
+	} """)
+                        echo "deploy in prod"
+                   }
+                }
+            }
+        }
+	
+    }
+
+}
