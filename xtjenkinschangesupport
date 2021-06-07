@@ -13,7 +13,31 @@ pipeline {
     stages {
         stage("checkout") {
             steps {
-                
+                snDevOpsChange(changeRequestDetails: """ {
+		"setCloseCode": false,
+		"attributes": {
+			"description": " DevOps XT test Description",  // Please verify the data exist in servicenow
+			"priority": "3",
+			"short_description": "DevOps XT test Short Description",
+			"requested_by": {
+				"email": "abel.tuter@example.com"
+			},
+			"start_date": "2021-02-05 08:00:00",
+			"end_date": "2021-02-15 08:00:00",
+			"justification": "DevOps XT test justification",
+			"implementation_plan": "DevOps XT Test implementation plan",
+			"backout_plan": "DevOps XT Test backout plan",
+			"test_plan": "DevOps XT Test plan to test the tests which test the test-now application",
+			"watch_list": [
+				"a8f98bb0eb32010045e1a5115206fe3a",
+				"62826bf03710200044e0bfc8bcbe5df1"
+			],
+			"work_notes_list": [
+				"a8f98bb0eb32010045e1a5115206fe3a",
+				"62826bf03710200044e0bfc8bcbe5df1"
+			]
+		}
+	} """)
                 echo "Building Pipeline" 
                 checkout scm
             }
