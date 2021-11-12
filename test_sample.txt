@@ -3,3 +3,4 @@ New DevOps Story- Moving state
 Sample commit 
 Defect story-	DFCT0010001
 acacvac
+DFCT0010001:Defect story-
