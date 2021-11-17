@@ -41,6 +41,7 @@ pipeline {
                 echo "Integration Test"
                 sh "mvn test"
                 sleep 5
+		snDevOpsChange()
             }
             post {
                 always {
@@ -54,7 +55,6 @@ pipeline {
                     steps{
 		        snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "stage"}""")            
 
-			snDevOpsChange()
                         echo "deploy in prod"
                    }
                 
