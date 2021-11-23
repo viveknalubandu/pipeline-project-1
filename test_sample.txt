@@ -6,5 +6,6 @@ acacvac
 DFCT0010001:Defect story-
 DFCT0010001:Defect story-
 
-Defected added
-	AIOPS-36
+Defected adde
+
+AIOPS-36
