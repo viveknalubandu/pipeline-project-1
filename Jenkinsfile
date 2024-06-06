@@ -43,7 +43,6 @@ pipeline {
 				steps {
 					echo "Manual Building in UAT"
 					//configurationName:"DevOps-vkvan2.service-now.com-1708638241269"
-				        snDevOpsChange()
 				}
 			}
 			stage('deploy to prod') {
@@ -99,7 +98,6 @@ pipeline {
 				}
 				steps {
 					echo "deploy in prod"
-					snDevOpsChange() 
 				}
 			}
 		}
