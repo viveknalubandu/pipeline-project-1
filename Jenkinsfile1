@@ -34,7 +34,7 @@ pipeline {
         
 	stage('unit-tests') {
             steps {
-               //snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
+               snDevOpsArtifact(artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "unit-tests"}""")            
 
                 echo "Unit Test"
                 sh "mvn test"
@@ -58,7 +58,7 @@ pipeline {
                     steps{
                         
                         echo "deploy in UAT"
-                        snDevOpsChange()
+                        //snDevOpsChange()
 
                     }
                 }
@@ -67,8 +67,8 @@ pipeline {
                         branch 'master'
                     }
                     steps{
-			//snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
-			//snDevOpsChange()
+			snDevOpsPackage(name: "balu-package", artifactsPayload:"""{"artifacts": [{"name": "devops_pipeline_demo.jar","version": "${version}","semanticVersion": "${semanticVersion}","repositoryName": "devops_pipeline_demo"}],"stageName": "deploy"}""")            
+			snDevOpsChange()
                         echo "deploy in prod"
                    }
                 }
