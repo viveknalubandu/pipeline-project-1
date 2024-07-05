@@ -32,7 +32,7 @@ pipeline {
 	    }
         }
 
-        stage('unit-tests') {
+        stage('test') {
             steps {
                 echo "Unit Test"
                 sh "mvn test"
